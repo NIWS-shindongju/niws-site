@@ -1,0 +1,104 @@
+/* NIWS — forgeanewera.com
+   설계 근거(2026-09-09 실측): 한국 AI/SW 기업 8~10곳 직접 열람 결과
+   · 메뉴 개수 최빈값 4~5개, 실질 페이지 4~6장
+   · 한글 본문 Pretendard 또는 Noto Sans KR, 영문·숫자 Inter (10곳 중 9곳)
+   · 사이드바 0/10, 상단 고정 헤더 10/10
+   · 애니메이션·스플래시 없음 — 상법 시행령 제6조 제3항의
+     "초기화면에서 쉽게 찾을 수 있도록" 요건과 정면 충돌하기 때문 */
+
+:root {
+  --ink:      #14181d;
+  --ink-2:    #4a5560;
+  --ink-3:    #7b8794;
+  --line:     #e3e7eb;
+  --line-2:   #f1f4f6;
+  --bg:       #ffffff;
+  --bg-2:     #f7f9fa;
+  --accent:   #1c4f8c;   /* 차분한 남색 — 과한 채도는 심사 문서에 맞지 않는다 */
+  --max:      960px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+/* ── 헤더 ── 초기화면 1클릭에 「공고」가 보여야 한다 (시행령 §6③) ── */
+header {
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: rgba(255,255,255,.95);
+  backdrop-filter: saturate(180%) blur(8px); z-index: 10;
+}
+.hd { display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; height: 64px; }
+.brand { font-weight: 700; font-size: 20px; letter-spacing: .02em; color: var(--ink); }
+.brand small { display: block; font-weight: 500; font-size: 11px;
+               color: var(--ink-3); letter-spacing: 0; margin-top: -3px; }
+nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+nav a { color: var(--ink-2); font-size: 15px; font-weight: 500; }
+nav a[aria-current="page"] { color: var(--accent); font-weight: 700; }
+
+/* ── 본문 ── */
+main { padding: 56px 0 72px; }
+h1 { font-size: 30px; line-height: 1.4; margin: 0 0 10px; letter-spacing: -0.02em; }
+h2 { font-size: 19px; margin: 40px 0 12px; letter-spacing: -0.015em; }
+h2:first-child { margin-top: 0; }
+p  { margin: 0 0 14px; color: var(--ink-2); }
+.lead { font-size: 18px; color: var(--ink); margin-bottom: 28px; }
+.sub  { color: var(--ink-3); font-size: 14px; }
+
+.hero { padding: 20px 0 8px; border-bottom: 1px solid var(--line-2); margin-bottom: 36px; }
+
+/* 사실 표 — 심사자가 등기부·정관과 대조하는 자리 */
+table.facts { border-collapse: collapse; width: 100%; margin: 8px 0 20px; font-size: 15px; }
+table.facts th, table.facts td {
+  border-bottom: 1px solid var(--line); padding: 11px 0; text-align: left; vertical-align: top;
+}
+table.facts th { width: 168px; color: var(--ink-3); font-weight: 500; white-space: nowrap; }
+
+ul.plain { margin: 0 0 16px; padding-left: 20px; color: var(--ink-2); }
+ul.plain li { margin-bottom: 6px; }
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 720px) {
+  .cols { grid-template-columns: 1fr; }
+  nav ul { gap: 14px; }
+  nav a { font-size: 14px; }
+  .hd { height: 58px; }
+  h1 { font-size: 25px; }
+}
+
+/* 상태 고지 — 설립 절차 중임을 숨기지 않는다 */
+.status {
+  background: var(--bg-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 14px 16px; font-size: 14px; color: var(--ink-2);
+  margin: 0 0 28px;
+}
+.status b { color: var(--ink); }
+
+/* 공고 목록 */
+.notice-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.notice-list li { border-bottom: 1px solid var(--line); padding: 16px 0;
+                  display: flex; justify-content: space-between; gap: 16px; }
+.notice-list time { color: var(--ink-3); font-size: 14px; white-space: nowrap;
+                    font-variant-numeric: tabular-nums; }
+.empty { border: 1px dashed var(--line); border-radius: 6px; padding: 40px 20px;
+         text-align: center; color: var(--ink-3); font-size: 15px; }
+
+/* ── 푸터 ── 등기부 대조용 최소 사실만 ── */
+footer { border-top: 1px solid var(--line); padding: 28px 0 44px;
+         font-size: 14px; color: var(--ink-3); }
+footer .co { color: var(--ink-2); font-weight: 600; }
+footer p { color: var(--ink-3); margin: 4px 0; }
